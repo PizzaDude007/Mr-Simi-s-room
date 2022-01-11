@@ -167,52 +167,52 @@ begin
 
 				when s2=> -- CALIENTE - SECO
 					if input(0) = '0' then
-						output <= "000001";
+						output <= "010011";
 					else
 						output <= "010010";
 					end if;
 					
 				when s3=> -- CALIENTE - HUMEDO
 					if input(0) = '0' then
-						output <= "000001";
+						output <= "011001";
 					else
-						output <= "010000";
+						output <= "011000";
 					end if;
 				when s4=> -- FRIO - SECO
 					if input(0) = '0' then
-						output <= "000001";
+						output <= "101011";
 					else
-						output <= "100010";
+						output <= "101010";
 					end if;
 				when s5=> -- FRIO - HUMEDO
 					if input(0) = '0' then
-						output <= "000001";
+						output <= "101001";
 					else
-						output <= "100000";
+						output <= "101000";
 					end if;
 				when s6=> -- NORMAL - SECO
 					if input(0) = '0' then
-						output <= "000001";
+						output <= "001111";
 					else
 						output <= "000110";
 					end if;
 				when s7=> -- NORMAL - HUMEDO
 					if input(0) = '0' then
-						output <= "000001";
+						output <= "001101";
 					else
-						output <= "000100";
+						output <= "001100";
 					end if;
 				when s8=> -- CALIENTE - NORMAL
 					if input(3) = '0' then
 						output <= "010001";
 					else
-						output <= "000001";
+						output <= "010001";
 					end if;	
 				when s9=> -- FRIO - NORMAL
 					if input(3) = '0' then
 						output <= "100001";
 					else
-						output <= "000001";
+						output <= "100001";
 					end if;
 				when others=>  output <= "000100";
 			end case;

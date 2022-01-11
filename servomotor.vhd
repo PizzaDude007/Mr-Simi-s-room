@@ -2,18 +2,21 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
-entity decodificador_th is
+entity servomotor is
 	Port ( clk : in STD_LOGIC;
             ResetPos : in std_logic;
             NT : in std_logic_vector(1 downto 0);
             TH : in std_logic;
 		    --activo : out STD_LOGIC;
             posicionC : out STD_Logic;
-            posicionF : out STD_LOGIC);
-end decodificador_th;
+            posicionF : out STD_LOGIC
+--				boton : in std_logic);
+				);
+end servomotor;
 
 architecture behavioral of servomotor is
 	component divisor is 
+		generic (N : integer := 24);
 		Port ( clk : in STD_LOGIC;
 				 div_clk : out STD_LOGIC);
 	end component;
@@ -30,14 +33,15 @@ architecture behavioral of servomotor is
 	signal q : STD_LOGIC;
 	
 	begin
-	div : divisor port map (clk, reloj);
-	Caliente : pwm port map (clk, anchoC, posicionC);
-    Frio : pwm port map (clk, anchoF, posicionF);
+	div : divisor generic map (3) port map (clk, reloj);
+	Caliente : pwm port map (reloj, anchoC, posicionC);
+    Frio : pwm port map (reloj, anchoF, posicionF);
 	
 	process (nt)
 		variable valor : STD_LOGIC_VECTOR (15 downto 0) := X"1333";
 		--variable turno : integer range 0 to 5;
 		begin
+			if rising_edge(clk) then
             case NT is
                 when "00" =>
                     valor := X"1063";
@@ -48,9 +52,9 @@ architecture behavioral of servomotor is
                 when "11" =>
                     valor := X"07AF";
                 when others => 
-                    valor := X"1063";
+--                    valor := X"1063";
             end case;
-            if ResetPos = '1' then 
+            if ResetPos = '0' then 
                 valor := X"1063";
             end if;
         
@@ -59,6 +63,7 @@ architecture behavioral of servomotor is
             else
                 anchoC <= valor;
             end if;
+			end if;
 	end process;
 end behavioral;
 		
